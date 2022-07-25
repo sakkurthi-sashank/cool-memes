@@ -23,7 +23,7 @@ const Memes = (props: any) => {
       <div className="rounded-sm border p-8">
         <Image src={image} alt="" width={400} height={400} />
       </div>
-      <div className="flex flex-col sm:flex-row gap-10">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-10">
         <button className="w-36 rounded-md  bg-violet-500  py-2 text-white hover:bg-violet-600">
           <a
             href={image}
