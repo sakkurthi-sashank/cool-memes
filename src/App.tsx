@@ -1,32 +1,32 @@
-import React from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 
-const Memes = (props: any) => {
-  const [memeData, setMemeData] = React.useState<any>(props.data.memes);
-  const [count, setCount] = React.useState<number>(0);
-  const image = count < 0 ? "/Previos-image.jpg" : memeData[count].url;
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [memeData, setMemeData] = useState<any>([{}]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const loadData = async () => {
       const res: Response = await fetch("https://meme-api.herokuapp.com/gimme");
       const data = await res.json();
-      const newMeme = [...memeData, { ...data }];
-      setMemeData(newMeme);
+      setMemeData([...memeData, { ...data }]);
     };
     loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
-
   return (
     <div className="flex h-screen flex-col items-center  justify-evenly bg-gray-900">
       <div className="text-2xl font-bold text-white">Memes Life</div>
       <div className="rounded-sm border p-8">
-        <Image src={image} alt="" width={400} height={400} />
+        <img
+          src={count <= 0 ? "/menu.png" : memeData[count].url}
+          alt=""
+          width={400}
+          height={400}
+        />
       </div>
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-10">
         <button className="w-36 rounded-md  bg-violet-500  py-2 text-white hover:bg-violet-600">
           <a
-            href={image}
+            // href={image}
             rel="noreferrer"
             target={"_blank"}
             download="From"
@@ -35,7 +35,7 @@ const Memes = (props: any) => {
             Download
           </a>
         </button>
-        {count < 0 ? (
+        {count < 1 ? (
           <div></div>
         ) : (
           <button
@@ -60,4 +60,4 @@ const Memes = (props: any) => {
   );
 };
 
-export default Memes;
+export default App;
